@@ -56,8 +56,21 @@ public class VenueHireSystem {
 
         // TODO Implement other commands
         case "change":
+            String idChange = json.getString("id");
+            LocalDate startChange = LocalDate.parse(json.getString("start"));
+            LocalDate endChange = LocalDate.parse(json.getString("end"));
+            int smallChange = json.getInt("small");
+            int mediumChange = json.getInt("medium");
+            int largeChange = json.getInt("large");
+
+            JSONObject resultChange = request(idChange, startChange, endChange, smallChange, mediumChange, largeChange);
+            
         case "cancel":
+            String DeleteId = json.getString("id");
+            delete(DeleteId);
         case "list":
+            
+
         }
     }
 
@@ -68,9 +81,7 @@ public class VenueHireSystem {
         //find relevant venue, call venue.addroom(new room)
         //Update Venue's relevant room count
     }
-
-    //private addVenue(Venue v, ArrayList allVenues)
-    
+   
     public JSONObject request(String id, LocalDate start, LocalDate end,
             int small, int medium, int large) {
         JSONObject result = new JSONObject();
@@ -88,8 +99,6 @@ public class VenueHireSystem {
             }
         }
 
-        //If all criteria are satisfied with tentative bookings, 
-        //append reservation to masterBooking list aster list
         // FIXME Shouldn't always produce the same answer
         result.put("status", "success");
         result.put("venue", "Zoo");
@@ -101,6 +110,11 @@ public class VenueHireSystem {
         result.put("rooms", rooms);
         return result;
     }
+
+    private void delete(String DeleteID) {
+        //TODO
+    }
+    
 
     public static void main(String[] args) {
         VenueHireSystem system = new VenueHireSystem();
