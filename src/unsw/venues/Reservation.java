@@ -15,40 +15,42 @@ public class Reservation {
 
     /**
      * 
-     * @param reservationName Name of reservation
-     * @param bookedRoom Room assigned to reservation
-     * @param startDate Begin date of a reservation
-     * @param endDate End date of a reservation
+     * @param reservationName
+     * @param startDate
+     * @param endDate
+     * @param sml
+     * @param med
+     * @param lrg
      */
-    public Reservation(String reservationName, Room bookedRoom, LocalDate startDate, LocalDate endDate) {
+    public Reservation(String reservationName, LocalDate startDate, LocalDate endDate, int sml, int med, int lrg) {
         this.reservationName = reservationName;
         this.tempBookingFlag = true;
         this.bookedRoomList = new ArrayList<Room>();
         this.startDate = startDate;
         this.endDate = endDate;
-        this.smlCount = 0;
-        this.medCount = 0;
-        this.lrgCount = 0;
+        this.smlCount = sml;
+        this.medCount = med;
+        this.lrgCount = lrg;
     }
 
-    public String getReservationName(Reservation reservation) {
-        return this.reservationName;
+    public String getReservationName() {
+        return reservationName;
     }
 
-    public Room getRoom(Reservation reservation) {
-        return this.bookedRoom;
+    public ArrayList<Room> getRoomList() {
+        return bookedRoomList;
     }
 
-    public void setRoom(Room rm) {
-        this.bookedRoom = rm;
+    public void addRoomToList(Room rm) {
+        this.bookedRoomList.add(rm);
     }
 
     public LocalDate getStartDate() {
-        return this.startDate;
+        return startDate;
     }
 
     public LocalDate getEndDate() {
-        return this.endDate;
+        return endDate;
     }
 
     public void setFlag() {
@@ -56,7 +58,7 @@ public class Reservation {
     }
 
     public boolean getFlag() {
-        return this.tempBookingFlag;
+        return tempBookingFlag;
     }
 
     public int getSmlCount() {
@@ -68,14 +70,14 @@ public class Reservation {
     }
 
     public int getMedCount() {
-        return this.medCount;
+        return medCount;
     }
 
     public void setMedCount(int mrc) {
         this.medCount = mrc;
     }
     public int getLrgCount() {
-        return this.lrgCount;
+        return lrgCount;
     }
 
     public void setLrgCount(int lrc) {

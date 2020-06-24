@@ -23,12 +23,39 @@ public class Venue {
 
     //Checks if venue satisfies date/room requirements of booking
     public boolean attemptBooking (Reservation r){
-        //check venue has enough rooms
-        //look through room list. If available, tentative book
-        //if clash, keep looking
-        //if not, set tentitive booking flag
-        checkSize
-        room.booking.setFlag
+        //When venue can never satisfy room requirements, exit
+        if(!hasEnoughRooms(r)) {
+            System.out.println(this.venueName+"does not have enough rooms for reservation"+r.getReservationName());
+            return false;    
+        }
+        ArrayList<Room> SR = getSmlRooms();
+        ArrayList<Room> MR = getMedRooms();
+        ArrayList<Room> LR = getLrgRooms();
+        int smlNeeded = r.getSmlCount();
+        int medNeeded = r.getMedCount();
+        int lrgNeeded = r.getLrgCount();
+
+            for(Room prospectRoom: roomList) {
+                if(prospectRoom.roomAvailable(r)) {
+                    //add valid room to res room list
+                    r.getRoomList().add(prospectRoom);
+                    //Update counter for rooms still needed
+                    if (SR.contains(prospectRoom)) {
+                        smlNeeded--;
+                    } else if (MR.contains(prospectRoom)) {
+                        medNeeded--;
+                    } else {
+                        lrgNeeded--;
+                    }
+
+                }
+                //Not enough rooms are available at this venue during date range
+                if(smlNeeded != 0 || medNeeded != 0 || lrgNeeded != 0) {
+                    return false;
+                }
+            }
+        
+        return true;
     }
 
     public boolean hasEnoughRooms(Reservation r) {
@@ -38,18 +65,42 @@ public class Venue {
                 return true;
             }
     }
-//returns a list of rooms available 
-public ArrayList<Room> getVailable(LocalDate givenDate, int size) {
 
-    for room in roomList
-    room.get res(string)
-    append to a list
-}
+    public ArrayList<Room> getLrgRooms() {
+        ArrayList<Room> LR = new ArrayList<>();
+        for(Room r: roomList) {
+            if(r.getSize() == "Large") {
+                LR.add(r);
+            }
+        }
+        return LR;
+    }
 
+    public ArrayList<Room> getMedRooms() {
+        ArrayList<Room> MR = new ArrayList<>();
+        for(Room r: roomList) {
+            if(r.getSize() == "Medium") {
+                MR.add(r);
+            }
+        }
+        return MR;
+    }
+
+    public ArrayList<Room> getSmlRooms() {
+        ArrayList<Room> SR = new ArrayList<>();
+        for(Room r: roomList) {
+            if(r.getSize() == "Small") {
+                SR.add(r);
+            }
+        }
+        return SR;
+    }
+    /*
     public confirmAllReservation() {
         //add all temp=false booking objs to masterlist
         for room in roomList
         room.confirmRoom
     }
+    */
 }
 

@@ -21,7 +21,10 @@ public class Room {
 
     } 
 
-    get reserveration(id) //search through reList
+    public String getName() {
+        return roomName;
+    }
+    //Manage room counts
     
     //Only called after reservation validity is confirmed
     public void storeReservation(String bookingId) {
@@ -57,10 +60,15 @@ public class Room {
     }
 
     //for every reservation in room confirm booking
+    /*
     void confirmRoom(Reservation r)
     for r in this.reservationList {
         setFlag(r)
-        
+        */
+
+    public String getSize() {
+        return size;
+    }
 }
 
     
