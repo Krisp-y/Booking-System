@@ -3,6 +3,9 @@ package unsw.venues;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Venue {
     private String venueName;
     private ArrayList<Room> roomList;
@@ -35,16 +38,16 @@ public class Venue {
             for(Room prospectRoom: roomList) {
                 if(prospectRoom.roomAvailable(r)) {
                     //add valid room to res room list
-                    if(smlNeeded > 0 && prospectRoom.getSize() == "Small") {
+                    if(smlNeeded > 0 && prospectRoom.getSize().equals("Small")) {
                         smlNeeded--;
                     }
-                    if(medNeeded > 0 && prospectRoom.getSize() == "Medium") {
+                    if(medNeeded > 0 && prospectRoom.getSize().equals("Medium")) {
                         medNeeded--;
                     }
-                    if(lrgNeeded > 0 && prospectRoom.getSize() == "Large") {
+                    if(lrgNeeded > 0 && prospectRoom.getSize().equals("Large")) {
                         lrgNeeded--;
                     }
-                    r.getRoomList().add(prospectRoom);
+                    //r.getRoomList().add(prospectRoom);
                     prospectRoom.storeReservation(r);
                     //add reservation r to prospect instead
                 }
@@ -72,7 +75,7 @@ public class Venue {
     public ArrayList<Room> getLrgRooms() {
         ArrayList<Room> LR = new ArrayList<>();
         for(Room r: roomList) {
-            if(r.getSize() == "Large") {
+            if(r.getSize().equals("Large")) {
                 LR.add(r);
             }
         }
@@ -82,7 +85,7 @@ public class Venue {
     public ArrayList<Room> getMedRooms() {
         ArrayList<Room> MR = new ArrayList<>();
         for(Room r: roomList) {
-            if(r.getSize() == "Medium") {
+            if(r.getSize().equals("Medium")) {
                 MR.add(r);
             }
         }
@@ -92,7 +95,7 @@ public class Venue {
     public ArrayList<Room> getSmlRooms() {
         ArrayList<Room> SR = new ArrayList<>();
         for(Room r: roomList) {
-            if(r.getSize() == "Small") {
+            if(r.getSize().equals("Small")) {
                 SR.add(r);
             }
         }
@@ -107,5 +110,16 @@ public class Venue {
         return roomList;
     }
  
+    public JSONArray venArray() {
+        JSONArray newVenArray = new JSONArray();
+        //sort
+        for(Room rm: roomList) {
+            JSONObject newObj = new JSONObject();
+            newObj.put("room", rm.getName());
+            newObj.put("reservations", rm.resArray());
+            newVenArray.put(newObj);
+        }
+        return newVenArray;
+    }
 }
 

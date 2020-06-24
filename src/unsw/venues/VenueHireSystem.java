@@ -54,7 +54,6 @@ public class VenueHireSystem {
             System.out.println(result.toString(2));
             break;
 
-        // TODO Implement other commands
         case "change":
             String idChange = json.getString("id");
             LocalDate startChange = LocalDate.parse(json.getString("start"));
@@ -71,8 +70,7 @@ public class VenueHireSystem {
 
         case "list":
             String listId = json.getString("venue");
-
-            JSONArray listResult;
+            list(listId);
             
 
         }
@@ -82,7 +80,7 @@ public class VenueHireSystem {
 
         Room newRoom = new Room(room, size);
         for(Venue v : venueList) {
-            if(v.getVenueName() == venue) {
+            if(v.getVenueName().equals(venue)) {
                 v.getVenueRoomList().add(newRoom);
             }
         }
@@ -120,10 +118,16 @@ public class VenueHireSystem {
     }
 
     private void delete(String DeleteID) {
-        //TODO
+        
     }
     
-    private void list(String )
+    private void list(String listId) {
+        for(Venue v : venueList) {
+            if(v.getVenueName().equals(listId)) {
+                System.out.println(v.venArray());
+            }
+        }
+    }
     public static void main(String[] args) {
         VenueHireSystem system = new VenueHireSystem();
 
