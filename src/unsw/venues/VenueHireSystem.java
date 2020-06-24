@@ -68,16 +68,24 @@ public class VenueHireSystem {
         case "cancel":
             String DeleteId = json.getString("id");
             delete(DeleteId);
+
         case "list":
+            String listId = json.getString("venue");
+
+            JSONArray listResult;
             
 
         }
     }
 
     private void addRoom(String venue, String room, String size) {
-        // TODO Process the room command
-        //check if room exists
 
+        Room newRoom = new Room(room, size);
+        for(Venue v : venueList) {
+            if(v.getVenueName() == venue) {
+                v.getVenueRoomList().add(newRoom);
+            }
+        }
         //find relevant venue, call venue.addroom(new room)
         //Update Venue's relevant room count
     }
@@ -115,7 +123,7 @@ public class VenueHireSystem {
         //TODO
     }
     
-
+    private void list(String )
     public static void main(String[] args) {
         VenueHireSystem system = new VenueHireSystem();
 

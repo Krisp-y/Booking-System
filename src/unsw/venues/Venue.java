@@ -28,12 +28,6 @@ public class Venue {
             System.out.println(this.venueName+"does not have enough rooms for reservation"+r.getReservationName());
             return false;    
         }
-        /*
-        ArrayList<Room> SR = getSmlRooms();
-        ArrayList<Room> MR = getMedRooms();
-        ArrayList<Room> LR = getLrgRooms();
-        */
-
         int smlNeeded = r.getSmlCount();
         int medNeeded = r.getMedCount();
         int lrgNeeded = r.getLrgCount();
@@ -57,10 +51,13 @@ public class Venue {
             }
             //Not enough rooms are available at this venue during date range
             if(smlNeeded != 0 || medNeeded != 0 || lrgNeeded != 0) {
-                //go through all rooms in this venues list, remove r
-                return false;
+                //go through all rooms in this venues list, clear r as it can't be booked
+                for(Room toClear: roomList) {
+                    toClear.removeReservation(r);
+                }
+                return false;    
             }
-        
+                
         return true;    
     }
 
@@ -102,8 +99,12 @@ public class Venue {
         return SR;
     }
 
-    public void removeReservation(ArrayList<Venue> venueList) {
+    public String getVenueName() {
+        return venueName;
+    }
 
+    public ArrayList<Room> getVenueRoomList() {
+        return roomList;
     }
  
 }

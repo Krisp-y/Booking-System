@@ -3,9 +3,11 @@ package unsw.venues;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class Reservation {
     private String reservationName;
-    private ArrayList<Room> bookedRoomList;
     private LocalDate startDate;
     private LocalDate endDate;
     private boolean tempBookingFlag;
@@ -13,19 +15,10 @@ public class Reservation {
     private int medCount;
     private int lrgCount;
 
-    /**
-     * 
-     * @param reservationName
-     * @param startDate
-     * @param endDate
-     * @param sml
-     * @param med
-     * @param lrg
-     */
+    
     public Reservation(String reservationName, LocalDate startDate, LocalDate endDate, int sml, int med, int lrg) {
         this.reservationName = reservationName;
         this.tempBookingFlag = true;
-        this.bookedRoomList = new ArrayList<Room>();
         this.startDate = startDate;
         this.endDate = endDate;
         this.smlCount = sml;
@@ -35,14 +28,6 @@ public class Reservation {
 
     public String getReservationName() {
         return reservationName;
-    }
-
-    public ArrayList<Room> getRoomList() {
-        return bookedRoomList;
-    }
-
-    public void addRoomToList(Room rm) {
-        this.bookedRoomList.add(rm);
     }
 
     public LocalDate getStartDate() {
@@ -83,4 +68,13 @@ public class Reservation {
     public void setLrgCount(int lrc) {
         this.lrgCount = lrc;
     }
+
+    public JSONObject resToJSON() {
+        JSONObject newObj = new JSONObject();
+        newObj.put("id", reservationName);
+        newObj.put("start", startDate.toString());
+        newObj.put("end", endDate.toString()); 
+        return newObj;
+    }
+   
 }

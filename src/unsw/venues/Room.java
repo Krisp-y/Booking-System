@@ -1,18 +1,16 @@
 package unsw.venues;
 
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 
 public class Room {
     private String roomName;
     private String size;
     private ArrayList<Reservation> reservationList;
-
-    /**
-     * 
-     * @param roomName
-     * @param size
-     */
 
     public Room(String roomName, String size) {
         this.roomName = roomName;
@@ -24,12 +22,17 @@ public class Room {
     public String getName() {
         return roomName;
     }
-    //Manage room counts
-    
     //Only called after reservation validity is confirmed
-    public void storeReservation(String bookingId) {
-        //if room available, store reservating in room    
+    public void storeReservation(Reservation r) { 
         this.reservationList.add(r);
+    }
+
+    public ArrayList<Reservation> getReservations(){
+        return reservationList;
+    }
+
+    public void removeReservation(Reservation r) {
+        reservationList.remove(r);
     }
 
     public boolean roomAvailable(Reservation r) {
@@ -47,27 +50,24 @@ public class Room {
             } else if (TRstart.isBefore(ERend) && ERend.isAfter(TRstart)) {
                 return false;
             } else {
-                //Room is free for date window, add to list
-                //
-                if(r.getRoomList().size() == 0) {
-                    r.setFlag();
-                }
-                r.addRoomToList(this);
+                //Room is free for date window
                 return true;
             }
         }
-
+        return true;
     }
-
-    //for every reservation in room confirm booking
-    /*
-    void confirmRoom(Reservation r)
-    for r in this.reservationList {
-        setFlag(r)
-        */
 
     public String getSize() {
         return size;
+    }
+
+    public JSONArray resArray() {
+        JSONArray newArray = new JSONArray();
+        //sort
+        for(Reservation res: reservationList) {
+            newArray.put(res.resToJSON());
+        }
+        return newArray;
     }
 }
 
