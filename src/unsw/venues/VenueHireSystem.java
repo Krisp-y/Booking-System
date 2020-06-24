@@ -15,10 +15,12 @@ import org.json.JSONObject;
  * A basic prototype to serve as the "back-end" of a venue hire system. Input
  * and output is in JSON format.
  *
- * @author Robert Clifton-Everest
+ * @author z5165630 
  *
  */
 public class VenueHireSystem {
+
+    //arrayList of venues
 
     /**
      * Constructs a venue hire system. Initially, the system contains no venues,
@@ -57,14 +59,19 @@ public class VenueHireSystem {
 
     private void addRoom(String venue, String room, String size) {
         // TODO Process the room command
+        //find relevant venue, call venue.addroom(new room)
     }
 
+    //private addVenue(Venue v, ArrayList allVenues)
+    )
     public JSONObject request(String id, LocalDate start, LocalDate end,
             int small, int medium, int large) {
         JSONObject result = new JSONObject();
 
         // TODO Process the request commmand
 
+        //Check that there are enough available rooms
+        //Check all venues until one with enough rooms it found
         // FIXME Shouldn't always produce the same answer
         result.put("status", "success");
         result.put("venue", "Zoo");
