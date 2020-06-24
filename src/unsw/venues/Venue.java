@@ -28,9 +28,12 @@ public class Venue {
             System.out.println(this.venueName+"does not have enough rooms for reservation"+r.getReservationName());
             return false;    
         }
+        /*
         ArrayList<Room> SR = getSmlRooms();
         ArrayList<Room> MR = getMedRooms();
         ArrayList<Room> LR = getLrgRooms();
+        */
+
         int smlNeeded = r.getSmlCount();
         int medNeeded = r.getMedCount();
         int lrgNeeded = r.getLrgCount();
@@ -38,24 +41,27 @@ public class Venue {
             for(Room prospectRoom: roomList) {
                 if(prospectRoom.roomAvailable(r)) {
                     //add valid room to res room list
-                    r.getRoomList().add(prospectRoom);
-                    //Update counter for rooms still needed
-                    if (SR.contains(prospectRoom)) {
+                    if(smlNeeded > 0 && prospectRoom.getSize() == "Small") {
                         smlNeeded--;
-                    } else if (MR.contains(prospectRoom)) {
+                    }
+                    if(medNeeded > 0 && prospectRoom.getSize() == "Medium") {
                         medNeeded--;
-                    } else {
+                    }
+                    if(lrgNeeded > 0 && prospectRoom.getSize() == "Large") {
                         lrgNeeded--;
                     }
-
-                }
-                //Not enough rooms are available at this venue during date range
-                if(smlNeeded != 0 || medNeeded != 0 || lrgNeeded != 0) {
-                    return false;
+                    r.getRoomList().add(prospectRoom);
+                    prospectRoom.storeReservation(r);
+                    //add reservation r to prospect instead
                 }
             }
+            //Not enough rooms are available at this venue during date range
+            if(smlNeeded != 0 || medNeeded != 0 || lrgNeeded != 0) {
+                //go through all rooms in this venues list, remove r
+                return false;
+            }
         
-        return true;
+        return true;    
     }
 
     public boolean hasEnoughRooms(Reservation r) {
@@ -95,12 +101,10 @@ public class Venue {
         }
         return SR;
     }
-    /*
-    public confirmAllReservation() {
-        //add all temp=false booking objs to masterlist
-        for room in roomList
-        room.confirmRoom
+
+    public void removeReservation(ArrayList<Venue> venueList) {
+
     }
-    */
+ 
 }
 
