@@ -30,10 +30,28 @@ public class Room {
     }
 
     public boolean roomAvailable(Reservation r) {
-        //Search res list
-        for(int i = 0; i<reservationList.size(); i++) {
-            LocalDate thisStart = this.reservationList.get(i).getStartDate();
-            if(r.getStartDate() this.reservationList.get(i).getStartDate())
+        //Tentative reservation dates
+        LocalDate TRstart = r.getStartDate();
+        LocalDate TRend = r.getEndDate();
+        for(Reservation res: reservationList) {
+            //Start/end date for existing reservation in list
+            LocalDate ERstart = res.getStartDate();
+            LocalDate ERend = res.getEndDate();
+            if(ERstart.isBefore(TRstart) && TRend.isBefore(ERend)) {
+                return false;
+            } else if(TRend.isBefore(ERstart) && TRend.isBefore(ERend)) {
+                return false;
+            } else if (TRstart.isBefore(ERend) && ERend.isAfter(TRstart)) {
+                return false;
+            } else {
+                //Room is free for date window, add to list
+                //
+                if(r.getRoomList().size() == 0) {
+                    r.setFlag();
+                }
+                r.addRoomToList(this);
+                return true;
+            }
         }
 
     }
