@@ -77,15 +77,12 @@ public class VenueHireSystem {
     }
 
     private void addRoom(String venue, String room, String size) {
-
-        Room newRoom = new Room(room, size);
         for(Venue v : venueList) {
             if(v.getVenueName().equals(venue)) {
-                v.getVenueRoomList().add(newRoom);
+                v.appendRoom(room,size);
             }
         }
-        //find relevant venue, call venue.addroom(new room)
-        //Update Venue's relevant room count
+        
     }
    
     public JSONObject request(String id, LocalDate start, LocalDate end,
@@ -100,15 +97,15 @@ public class VenueHireSystem {
             if(v.attemptBooking(newRes)) {
                 //Booking is valid, set temp flag to false
                 newRes.setFlag();
+                result.put("status", "success");
+                result.put("venue", v);
             } else {
-                return; //JSON object -> rejected 
+                result.put("status", "rejected");
             }
         }
 
         // FIXME Shouldn't always produce the same answer
-        result.put("status", "success");
-        result.put("venue", "Zoo");
-
+        
         JSONArray rooms = new JSONArray();
         rooms.put("Penguin");
         rooms.put("Hippo");

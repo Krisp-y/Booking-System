@@ -5,6 +5,6 @@ public class lrgRoom extends Room {
         super(roomName,size,reservationList);
     }
     public lrgRoom (String size) {
-        this.size = "large";
+        this.getsize() = "large";
     }
 }

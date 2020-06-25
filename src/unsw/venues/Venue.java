@@ -121,5 +121,17 @@ public class Venue {
         }
         return newVenArray;
     }
+
+    public void appendRoom (String room, String size) {
+        Room rm = new Room(room, size);
+        roomList.add(rm);
+        if(rm.getSize().equals("Small")) {
+            sml++;
+        } else if (rm.getSize().equals("Medium")) {
+            med++;
+        } else {
+            lrg++;
+        }
+    }
 }
 
