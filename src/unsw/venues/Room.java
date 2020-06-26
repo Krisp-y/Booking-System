@@ -39,15 +39,25 @@ public class Room {
         //Tentative reservation dates
         LocalDate TRstart = r.getStartDate();
         LocalDate TRend = r.getEndDate();
+        //empty list case
+        if(reservationCount() == 0) {
+            System.out.println("This room has no reservations so it can be booked");
+            return true;
+            
+        }
         for(Reservation res: reservationList) {
             //Start/end date for existing reservation in list
+            System.out.println("In reslist for loop");
             LocalDate ERstart = res.getStartDate();
             LocalDate ERend = res.getEndDate();
             if(ERstart.isBefore(TRstart) && TRend.isBefore(ERend)) {
+                System.out.println("a reservation already goes for the whole window");
                 return false;
-            } else if(TRend.isBefore(ERstart) && TRend.isBefore(ERend)) {
+            } else if(TRstart.isBefore(ERstart) && TRend.isBefore(ERend)) {
+                System.out.println("a reservation starts before your booking and finishes after");
                 return false;
             } else if (TRstart.isBefore(ERend) && ERend.isAfter(TRstart)) {
+                System.out.println("a reservation is still going during the start time of your booking");
                 return false;
             } else {
                 //Room is free for date window
@@ -59,6 +69,10 @@ public class Room {
 
     public String getSize() {
         return size;
+    }
+
+    public int reservationCount() {
+        return reservationList.size();
     }
 
     public JSONArray resArray() {

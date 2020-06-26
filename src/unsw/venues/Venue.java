@@ -34,17 +34,21 @@ public class Venue {
         int smlNeeded = r.getSmlCount();
         int medNeeded = r.getMedCount();
         int lrgNeeded = r.getLrgCount();
+        System.out.println("This booking needs "+smlNeeded+"sml, "+medNeeded+"med, "+lrgNeeded+"lrg");
 
             for(Room prospectRoom: roomList) {
                 if(prospectRoom.roomAvailable(r)) {
                     //add valid room to res room list
                     if(smlNeeded > 0 && prospectRoom.getSize().equals("Small")) {
+                        System.out.println("an available small room has been found");
                         smlNeeded--;
                     }
                     if(medNeeded > 0 && prospectRoom.getSize().equals("Medium")) {
+                        System.out.println("an available medium room has been found");
                         medNeeded--;
                     }
                     if(lrgNeeded > 0 && prospectRoom.getSize().equals("Large")) {
+                        System.out.println("an available large room has been found");
                         lrgNeeded--;
                     }
                     //r.getRoomList().add(prospectRoom);
@@ -55,6 +59,8 @@ public class Venue {
             //Not enough rooms are available at this venue during date range
             if(smlNeeded != 0 || medNeeded != 0 || lrgNeeded != 0) {
                 //go through all rooms in this venues list, clear r as it can't be booked
+                System.out.println("Not enough rooms are avaialble during this date window");
+                System.out.println("Still need "+smlNeeded+"sml, "+medNeeded+"med, "+lrgNeeded+"lrg");
                 for(Room toClear: roomList) {
                     toClear.removeReservation(r);
                 }
@@ -65,7 +71,8 @@ public class Venue {
     }
 
     public boolean hasEnoughRooms(Reservation r) {
-        if(r.getSmlCount() > this.sml || r.getMedCount() > this.med || r.getLrgCount() > this.lrg) {
+        System.out.println("Venue being check for enough rooms, "+venueName+ " has"+sml+"sml "+med+"med "+lrg+"lrg");
+        if(r.getSmlCount() > sml || r.getMedCount() > med || r.getLrgCount() > lrg) {
                 return false;
             } else {
                 return true;
@@ -122,14 +129,16 @@ public class Venue {
         return newVenArray;
     }
 
+  
     public void appendRoom (String room, String size) {
         Room rm = new Room(room, size);
         roomList.add(rm);
-        if(rm.getSize().equals("Small")) {
+        System.out.println("The room "+ rm.getName()+ "being added is of size "+rm.getSize());
+        if(rm.getSize().equals("small")) {
             sml++;
-        } else if (rm.getSize().equals("Medium")) {
+        } else if (rm.getSize().equals("medium")) {
             med++;
-        } else {
+        } else if(rm.getSize().equals("large")){
             lrg++;
         }
     }

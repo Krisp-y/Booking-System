@@ -34,6 +34,13 @@ public class VenueHireSystem {
         this.venueList = new ArrayList<Venue>();
     }
 
+    public void showRoomSizes(Venue v) {
+        for(Venue venue: venueList) {
+            if(v.getVenueName().equals(v)) {
+                System.out.println("Venue" +v+"has "+v.getSmlRooms()+"sml\n"+v.getMedRooms()+"med\n"+v.getLrgRooms()+"lrg\n");
+            }
+        }
+    } 
     private void processCommand(JSONObject json) {
         switch (json.getString("command")) {
 
@@ -88,6 +95,8 @@ public class VenueHireSystem {
             if (v.getVenueName().equals(venue)) {
                 System.out.println("adding room" + room + "to venue" + venue);
                 v.appendRoom(room, size);
+                showRoomSizes(v);
+                //System.out.println("Room" + room + "is size"+ getSize(room) "and belongs to " + venue);
                 return;
             }
 
@@ -95,6 +104,7 @@ public class VenueHireSystem {
         Venue newVen = new Venue(venue);
         newVen.appendRoom(room, size);
         venueList.add(newVen);
+        showRoomSizes(newVen);
 
         /*
          * JSONArray rooms = new JSONArray(); rooms.put("Penguin"); rooms.put("Hippo");
