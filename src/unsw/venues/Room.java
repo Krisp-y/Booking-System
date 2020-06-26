@@ -40,11 +40,13 @@ public class Room {
         LocalDate TRstart = r.getStartDate();
         LocalDate TRend = r.getEndDate();
         //empty list case
+        /*
         if(reservationCount() == 0) {
             System.out.println("This room has no reservations so it can be booked");
             return true;
             
         }
+        */
         for(Reservation res: reservationList) {
             //Start/end date for existing reservation in list
             System.out.println("In reslist for loop");

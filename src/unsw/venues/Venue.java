@@ -37,22 +37,31 @@ public class Venue {
         System.out.println("This booking needs "+smlNeeded+"sml, "+medNeeded+"med, "+lrgNeeded+"lrg");
 
             for(Room prospectRoom: roomList) {
+                //Enough rooms have been allocated
+                if(smlNeeded == 0 && medNeeded == 0 && lrgNeeded == 0) {
+                    return true;
+                }
                 if(prospectRoom.roomAvailable(r)) {
                     //add valid room to res room list
-                    if(smlNeeded > 0 && prospectRoom.getSize().equals("Small")) {
+                    if(smlNeeded > 0 && prospectRoom.getSize().equals("small")) {
                         System.out.println("an available small room has been found");
+                        prospectRoom.storeReservation(r);
                         smlNeeded--;
                     }
-                    if(medNeeded > 0 && prospectRoom.getSize().equals("Medium")) {
+                    if(medNeeded > 0 && prospectRoom.getSize().equals("medium")) {
                         System.out.println("an available medium room has been found");
+                        prospectRoom.storeReservation(r);
                         medNeeded--;
                     }
-                    if(lrgNeeded > 0 && prospectRoom.getSize().equals("Large")) {
+                    if(lrgNeeded > 0 && prospectRoom.getSize().equals("large")) {
                         System.out.println("an available large room has been found");
+                        prospectRoom.storeReservation(r);
                         lrgNeeded--;
                     }
                     //r.getRoomList().add(prospectRoom);
-                    prospectRoom.storeReservation(r);
+                    //prospectRoom.storeReservation(r);
+                    //System.out.println("A room of size "+prospectRoom.getSize()+"has been tentatively allocated");
+                    System.out.println("We still need "+smlNeeded+"s, "+medNeeded+"m, "+lrgNeeded+"l.");
                     //add reservation r to prospect instead
                 }
             }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 //import java.io.File;
 
+import org.json.JSONArray;
 //import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -74,6 +75,8 @@ public class VenueHireSystem {
 
                 JSONObject resultChange = request(idChange, startChange, endChange, smallChange, mediumChange,
                         largeChange);
+                
+                    System.out.println(resultChange.toString(2));
                 break;
             case "cancel":
                 String DeleteId = json.getString("id");
@@ -83,6 +86,8 @@ public class VenueHireSystem {
                 String listId = json.getString("venue");
                 System.out.println("listing " + listId);
                 list(listId);
+                //JSONArray listPrint = list(listId);
+                
                 break;
             default:
                 System.out.println("oi nup");
@@ -138,6 +143,7 @@ public class VenueHireSystem {
         for (Venue v : venueList) {
             if (v.getVenueName().equals(listId)) {
                 System.out.println(v.venArray());
+                
             }
         }
     }
