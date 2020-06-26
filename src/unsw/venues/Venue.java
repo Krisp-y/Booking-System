@@ -68,7 +68,7 @@ public class Venue {
             //Not enough rooms are available at this venue during date range
             if(smlNeeded != 0 || medNeeded != 0 || lrgNeeded != 0) {
                 //go through all rooms in this venues list, clear r as it can't be booked
-                System.out.println("Not enough rooms are avaialble during this date window");
+                System.out.println("Not enough rooms are avaialble during this date window, "+venueName+"can't accomodate"+r.getReservationName());
                 System.out.println("Still need "+smlNeeded+"sml, "+medNeeded+"med, "+lrgNeeded+"lrg");
                 for(Room toClear: roomList) {
                     toClear.removeReservation(r);
@@ -86,6 +86,10 @@ public class Venue {
             } else {
                 return true;
             }
+    }
+
+    public ArrayList<Room> getRoomList() {
+        return roomList;
     }
 
     public ArrayList<Room> getLrgRooms() {

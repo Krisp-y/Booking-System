@@ -37,6 +37,7 @@ public class Room {
 
     public boolean roomAvailable(Reservation r) {
         //Tentative reservation dates
+        System.out.println("Checking for reservation "+r.getReservationName());
         LocalDate TRstart = r.getStartDate();
         LocalDate TRend = r.getEndDate();
         //empty list case
@@ -52,19 +53,22 @@ public class Room {
             System.out.println("In reslist for loop");
             LocalDate ERstart = res.getStartDate();
             LocalDate ERend = res.getEndDate();
-            if(ERstart.isBefore(TRstart) && TRend.isBefore(ERend)) {
-                System.out.println("a reservation already goes for the whole window");
+            if(TRstart.isEqual(ERstart) || TRend.isEqual(ERstart) || TRstart.isEqual(ERend) || TRend.isEqual(ERend)) {
+                System.out.println("DATE CLASH");
                 return false;
-            } else if(TRstart.isBefore(ERstart) && TRend.isBefore(ERend)) {
-                System.out.println("a reservation starts before your booking and finishes after");
+            } else if(TRstart.isAfter(ERstart) && TRend.isBefore(ERend)) {
+                System.out.println("existing res occupies whole window");
                 return false;
-            } else if (TRstart.isBefore(ERend) && ERend.isAfter(TRstart)) {
-                System.out.println("a reservation is still going during the start time of your booking");
+            } else if (TRstart.isBefore(ERend) && TRend.isAfter(ERstart)) {
+                System.out.println("existing res starts before yours ends");
                 return false;
-            } else {
-                //Room is free for date window
-                return true;
-            }
+            } else if (TRstart.isBefore(ERstart) && TRend.isAfter(ERend)) {
+                System.out.println("existing res starts and ends during your window");
+                return false;
+            } else if (TRstart.isAfter(ERstart) && TRend.isAfter(ERend)) {
+                System.out.println("existing res not done yet");
+                return false;
+            } 
         }
         return true;
     }
