@@ -3,11 +3,14 @@
  */
 package unsw.venues;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
+//import java.io.File;
 
-import org.json.JSONArray;
+//import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -16,7 +19,7 @@ import org.json.JSONObject;
  * A basic prototype to serve as the "back-end" of a venue hire system. Input
  * and output is in JSON format.
  *
- * @author z5165630 
+ * @author z5165630
  *
  */
 public class VenueHireSystem {
@@ -34,68 +37,78 @@ public class VenueHireSystem {
     private void processCommand(JSONObject json) {
         switch (json.getString("command")) {
 
-        case "room":
-            String venue = json.getString("venue");
-            String room = json.getString("room");
-            String size = json.getString("size");
-            addRoom(venue, room, size);
-            break;
+            case "room":
+                String venue = json.getString("venue");
+                String room = json.getString("room");
+                String size = json.getString("size");
+                addRoom(venue, room, size);
+                break;
 
-        case "request":
-            String id = json.getString("id");
-            LocalDate start = LocalDate.parse(json.getString("start"));
-            LocalDate end = LocalDate.parse(json.getString("end"));
-            int small = json.getInt("small");
-            int medium = json.getInt("medium");
-            int large = json.getInt("large");
+            case "request":
+                String id = json.getString("id");
+                LocalDate start = LocalDate.parse(json.getString("start"));
+                LocalDate end = LocalDate.parse(json.getString("end"));
+                int small = json.getInt("small");
+                int medium = json.getInt("medium");
+                int large = json.getInt("large");
 
-            JSONObject result = request(id, start, end, small, medium, large);
+                JSONObject result = request(id, start, end, small, medium, large);
 
-            System.out.println(result.toString(2));
-            break;
+                System.out.println(result.toString(2));
+                break;
 
-        case "change":
-            String idChange = json.getString("id");
-            LocalDate startChange = LocalDate.parse(json.getString("start"));
-            LocalDate endChange = LocalDate.parse(json.getString("end"));
-            int smallChange = json.getInt("small");
-            int mediumChange = json.getInt("medium");
-            int largeChange = json.getInt("large");
+            case "change":
+                String idChange = json.getString("id");
+                LocalDate startChange = LocalDate.parse(json.getString("start"));
+                LocalDate endChange = LocalDate.parse(json.getString("end"));
+                int smallChange = json.getInt("small");
+                int mediumChange = json.getInt("medium");
+                int largeChange = json.getInt("large");
 
-            JSONObject resultChange = request(idChange, startChange, endChange, smallChange, mediumChange, largeChange);
-            
-        case "cancel":
-            String DeleteId = json.getString("id");
-            delete(DeleteId);
-
-        case "list":
-            String listId = json.getString("venue");
-            list(listId);
-            
-
+                JSONObject resultChange = request(idChange, startChange, endChange, smallChange, mediumChange,
+                        largeChange);
+                break;
+            case "cancel":
+                String DeleteId = json.getString("id");
+                delete(DeleteId);
+                break;
+            case "list":
+                String listId = json.getString("venue");
+                System.out.println("listing " + listId);
+                list(listId);
+                break;
+            default:
+                System.out.println("oi nup");
         }
+
     }
 
-    private void addRoom(String venue, String room, String size) {
-        for(Venue v : venueList) {
-            if(v.getVenueName().equals(venue)) {
-                v.appendRoom(room,size);
+    public void addRoom(String venue, String room, String size) {
+        for (Venue v : venueList) {
+            if (v.getVenueName().equals(venue)) {
+                System.out.println("adding room" + room + "to venue" + venue);
+                v.appendRoom(room, size);
+                return;
             }
+
         }
-        
+        Venue newVen = new Venue(venue);
+        newVen.appendRoom(room, size);
+        venueList.add(newVen);
+
+        /*
+         * JSONArray rooms = new JSONArray(); rooms.put("Penguin"); rooms.put("Hippo");
+         * result.put("rooms", rooms);
+         */
     }
-   
-    public JSONObject request(String id, LocalDate start, LocalDate end,
-            int small, int medium, int large) {
+
+    public JSONObject request(String id, LocalDate start, LocalDate end, int small, int medium, int large) {
         JSONObject result = new JSONObject();
 
-        // TODO Process the request commmand
-        //Look through venues in master list
         Reservation newRes = new Reservation(id, start, end, small, medium, large);
-        //Check 
-        for(Venue v: venueList) {
-            if(v.attemptBooking(newRes)) {
-                //Booking is valid, set temp flag to false
+        for (Venue v : venueList) {
+            if (v.attemptBooking(newRes)) {
+                // Booking is valid, set temp flag to false
                 newRes.setFlag();
                 result.put("status", "success");
                 result.put("venue", v);
@@ -104,31 +117,40 @@ public class VenueHireSystem {
             }
         }
 
-        // FIXME Shouldn't always produce the same answer
-        
-        JSONArray rooms = new JSONArray();
-        rooms.put("Penguin");
-        rooms.put("Hippo");
-
-        result.put("rooms", rooms);
         return result;
     }
 
     private void delete(String DeleteID) {
-        
+
     }
-    
+
     private void list(String listId) {
-        for(Venue v : venueList) {
-            if(v.getVenueName().equals(listId)) {
+        for (Venue v : venueList) {
+            if (v.getVenueName().equals(listId)) {
                 System.out.println(v.venArray());
             }
         }
     }
+
     public static void main(String[] args) {
+        //TODO CHANGE BACK TO STDIN, NO FILE READING IN FINAL YOU NUMPTY
         VenueHireSystem system = new VenueHireSystem();
 
-        Scanner sc = new Scanner(System.in);
+        /*File fileObj = new File("input1.txt");
+                Scanner fileReader = new Scanner(fileObj);
+                while (fileReader.hasNextLine()) {
+                    String data = fileReader.nextLine();
+        */            
+        //Scanner sc = new Scanner(System.in);
+        File fileObj = new File("input1.txt");
+        Scanner sc;
+        try {
+            sc = new Scanner(fileObj);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return;
+        }
 
         while (sc.hasNextLine()) {
             String line = sc.nextLine();

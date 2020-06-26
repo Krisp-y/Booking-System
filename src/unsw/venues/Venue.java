@@ -1,6 +1,6 @@
 package unsw.venues;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -115,8 +115,8 @@ public class Venue {
         //sort
         for(Room rm: roomList) {
             JSONObject newObj = new JSONObject();
-            newObj.put("room", rm.getName());
             newObj.put("reservations", rm.resArray());
+            newObj.put("room", rm.getName());
             newVenArray.put(newObj);
         }
         return newVenArray;
