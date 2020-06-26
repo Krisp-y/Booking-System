@@ -89,6 +89,29 @@ public class Room {
         }
         return newArray;
     }
+
+
+    public boolean resInList(String resID) {
+        for(Reservation r: reservationList) {
+            if(r.getReservationName().equals(resID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeResByID(String resID) {
+        Reservation marker = null;
+        for(Reservation r: reservationList) {
+            if(r.getReservationName().equals(resID)) {
+                marker = r;
+                break;
+            }
+        }
+        if (marker != null) {
+            removeReservation(marker);
+        }
+    }
 }
 
     

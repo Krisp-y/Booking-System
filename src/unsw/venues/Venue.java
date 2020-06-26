@@ -92,6 +92,17 @@ public class Venue {
         return roomList;
     }
 
+    //Delete all res objects from room list of certain ID
+    public boolean deleteAllResID(String DeleteID) {
+        for(Room rm: roomList) {
+            if(rm.resInList(DeleteID)) {
+                rm.removeResByID(DeleteID);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<Room> getLrgRooms() {
         ArrayList<Room> LR = new ArrayList<>();
         for(Room r: roomList) {

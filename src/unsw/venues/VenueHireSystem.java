@@ -79,8 +79,8 @@ public class VenueHireSystem {
                     System.out.println(resultChange.toString(2));
                 break;
             case "cancel":
-                //String DeleteId = json.getString("id");
-                //delete(DeleteId);
+                String DeleteId = json.getString("id");
+                delete(DeleteId);
                 break;
             case "list":
                 String listId = json.getString("venue");
@@ -134,18 +134,14 @@ public class VenueHireSystem {
 
         return result;
     }
-/*
+
     private void delete(String DeleteID) {
         //Look through VHS ven list
         for(Venue v: venueList) {
-            if (v.hasResID(DeleteID)) {
-                v.delete(DeleteID);
-                break;
-            }
+            v.deleteAllResID(DeleteID);
         }
-        //for every room in ven look at booking list
     }
-*/
+
     private void list(String listId) {
         for (Venue v : venueList) {
             if (v.getVenueName().equals(listId)) {
