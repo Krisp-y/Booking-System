@@ -121,11 +121,10 @@ public class VenueHireSystem {
             System.out.println("Checking venue"+v.getVenueName());
             if (v.attemptBooking(newRes)) {
                 // Booking is valid, set temp flag to false
-                System.out.println("This booking is valid booking to make");
+                //System.out.println("This booking is valid booking to make");
                 newRes.setFlag();
                 result.put("status", "success");
-                //TODO - make getRoomsForBookingID that applies JSON array conversion already
-                //result.put("rooms", newRes.ge());
+                result.put("rooms", v.rmArray(id));
                 result.put("venue", v.getVenueName());
                 return result;
             } else {

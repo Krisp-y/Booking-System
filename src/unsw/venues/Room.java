@@ -3,7 +3,7 @@ package unsw.venues;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-//import org.json.JSONObject;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 
@@ -119,6 +119,17 @@ public class Room {
             removeReservation(marker);
         }
     }
+
+    public boolean getRoomByID (String ID) {
+        for(Reservation r: getReservations()) {
+            if(r.getReservationName().equals(ID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }
 
     

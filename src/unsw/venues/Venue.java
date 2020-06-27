@@ -194,11 +194,20 @@ public class Venue {
         return lrg;
     }
 
-    public JSONArray getRLforBooking(String "bookingID") {
-        JSONArray roomArray = new JSONArray();
+  
+
+    public ArrayList<String> rmArray(String bookingID) {
+        //JSONObject bookingRooms = new JSONObject();
+        //sort
+        ArrayList<String> rooms = new ArrayList<String>();
         for(Room rm: roomList) {
-            
+            if(rm.getRoomByID(bookingID)) {
+                rooms.add(rm.getName());  
+            }
         }
+        return rooms;
+        //bookingRooms.put("rooms", rooms.toString());
+        //return bookingRooms;
     }
 }
 
