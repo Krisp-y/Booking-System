@@ -122,11 +122,15 @@ public class VenueHireSystem {
 
         Reservation newRes = new Reservation(id, start, end, small, medium, large);
         for (Venue v : venueList) {
+            //still looking through rest of the rooms even when a suitable venue has been
+            //found and allocated :(
+            System.out.println("Checking venue"+v.getVenueName());
             if (v.attemptBooking(newRes)) {
                 // Booking is valid, set temp flag to false
                 newRes.setFlag();
                 result.put("status", "success");
                 result.put("venue", v.getVenueName());
+                return result;
             } else {
                 result.put("status", "rejected");
             }
