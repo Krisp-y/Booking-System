@@ -176,13 +176,12 @@ public class VenueHireSystem {
 
     public static void main(String[] args) {
         VenueHireSystem system = new VenueHireSystem();
-
-        /*File fileObj = new File("input1.txt");
-                Scanner fileReader = new Scanner(fileObj);
-                while (fileReader.hasNextLine()) {
-                    String data = fileReader.nextLine();
-        */            
-        //Scanner sc = new Scanner(System.in);
+        
+        //comment out when testing input file   
+        Scanner sc = new Scanner(System.in);
+        
+        //My testing input setup
+        /*
         File fileObj = new File("input1.txt");
         Scanner sc;
         try {
@@ -192,7 +191,7 @@ public class VenueHireSystem {
             e.printStackTrace();
             return;
         }
-
+        */
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
             if (!line.trim().equals("")) {
