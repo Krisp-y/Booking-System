@@ -26,6 +26,9 @@ public class Reservation {
         this.lrgCount = lrg;
     }
 
+    public Reservation(Reservation R) {
+        this(R.getReservationName(),R.getStartDate(),R.getEndDate(),R.getSmlCount(),R.getMedCount(),R.getLrgCount());
+    }
     public String getReservationName() {
         return reservationName;
     }
@@ -76,5 +79,6 @@ public class Reservation {
         newObj.put("end", endDate.toString()); 
         return newObj;
     }
-   
+    
+
 }

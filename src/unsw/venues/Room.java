@@ -19,6 +19,13 @@ public class Room {
 
     } 
 
+    public Room(Room rm) {
+        this(rm.getName(),rm.getSize());
+        for(Reservation r: rm.getReservations()) {
+            this.reservationList.add(new Reservation(r));
+        }
+    }
+
     public String getName() {
         return roomName;
     }
@@ -37,7 +44,7 @@ public class Room {
 
     public boolean roomAvailable(Reservation r) {
         //Tentative reservation dates
-        System.out.println("Checking for reservation "+r.getReservationName());
+        //System.out.println("Checking for reservation "+r.getReservationName());
         LocalDate TRstart = r.getStartDate();
         LocalDate TRend = r.getEndDate();
         //empty list case
@@ -50,23 +57,23 @@ public class Room {
         */
         for(Reservation res: reservationList) {
             //Start/end date for existing reservation in list
-            System.out.println("In reslist for loop");
+            //System.out.println("In reslist for loop");
             LocalDate ERstart = res.getStartDate();
             LocalDate ERend = res.getEndDate();
             if(TRstart.isEqual(ERstart) || TRend.isEqual(ERstart) || TRstart.isEqual(ERend) || TRend.isEqual(ERend)) {
-                System.out.println("DATE CLASH");
+                //System.out.println("DATE CLASH");
                 return false;
             } else if(TRstart.isAfter(ERstart) && TRend.isBefore(ERend)) {
-                System.out.println("existing res occupies whole window");
+                //System.out.println("existing res occupies whole window");
                 return false;
             } else if (TRstart.isBefore(ERend) && TRend.isAfter(ERstart)) {
-                System.out.println("existing res starts before yours ends");
+                //System.out.println("existing res starts before yours ends");
                 return false;
             } else if (TRstart.isBefore(ERstart) && TRend.isAfter(ERend)) {
-                System.out.println("existing res starts and ends during your window");
+                //System.out.println("existing res starts and ends during your window");
                 return false;
-            } else if (TRstart.isAfter(ERstart) && TRend.isAfter(ERend)) {
-                System.out.println("existing res not done yet");
+            } else if (TRstart.isAfter(ERstart) && TRend.isBefore(ERend)) {
+                //System.out.println("existing res not done yet");
                 return false;
             } 
         }

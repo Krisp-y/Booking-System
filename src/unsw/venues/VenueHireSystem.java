@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 //import java.io.File;
 
-import org.json.JSONArray;
-//import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -35,14 +33,14 @@ public class VenueHireSystem {
         this.venueList = new ArrayList<Venue>();
     }
 
-    public void showRoomSizes(Venue v) {
-        for(Venue venue: venueList) {
-            if(v.getVenueName().equals(v)) {
-                System.out.println("Venue" +v+"has "+v.getSmlRooms()+"sml\n"+v.getMedRooms()+"med\n"+v.getLrgRooms()+"lrg\n");
-            }
+    public VenueHireSystem(VenueHireSystem VHS) {
+        this();
+        for(Venue v: VHS.getVenueList()) {
+            this.venueList.add(new Venue(v));
         }
-    } 
-    private void processCommand(JSONObject json) {
+    }
+
+    private VenueHireSystem processCommand(JSONObject json, VenueHireSystem system) {
         switch (json.getString("command")) {
 
             case "room":
@@ -73,10 +71,8 @@ public class VenueHireSystem {
                 int mediumChange = json.getInt("medium");
                 int largeChange = json.getInt("large");
 
-                JSONObject resultChange = request(idChange, startChange, endChange, smallChange, mediumChange,
-                        largeChange);
-                
-                    System.out.println(resultChange.toString(2));
+                system = change(idChange, startChange, endChange, smallChange, mediumChange,
+                        largeChange, system);
                 break;
             case "cancel":
                 String DeleteId = json.getString("id");
@@ -92,7 +88,7 @@ public class VenueHireSystem {
             default:
                 System.out.println("oi nup");
         }
-
+        return system;
     }
 
     public void addRoom(String venue, String room, String size) {
@@ -100,7 +96,6 @@ public class VenueHireSystem {
             if (v.getVenueName().equals(venue)) {
                 System.out.println("adding room" + room + "to venue" + venue);
                 v.appendRoom(room, size);
-                showRoomSizes(v);
                 //System.out.println("Room" + room + "is size"+ getSize(room) "and belongs to " + venue);
                 return;
             }
@@ -109,7 +104,6 @@ public class VenueHireSystem {
         Venue newVen = new Venue(venue);
         newVen.appendRoom(room, size);
         venueList.add(newVen);
-        showRoomSizes(newVen);
 
         /*
          * JSONArray rooms = new JSONArray(); rooms.put("Penguin"); rooms.put("Hippo");
@@ -127,8 +121,11 @@ public class VenueHireSystem {
             System.out.println("Checking venue"+v.getVenueName());
             if (v.attemptBooking(newRes)) {
                 // Booking is valid, set temp flag to false
+                System.out.println("This booking is valid booking to make");
                 newRes.setFlag();
                 result.put("status", "success");
+                //TODO - make getRoomsForBookingID that applies JSON array conversion already
+                //result.put("rooms", newRes.ge());
                 result.put("venue", v.getVenueName());
                 return result;
             } else {
@@ -139,6 +136,25 @@ public class VenueHireSystem {
         return result;
     }
 
+    public VenueHireSystem change(String id, LocalDate start, LocalDate end, int small, int medium, int large, VenueHireSystem oldSystem) {
+        JSONObject changeResult = new JSONObject();
+        //clone VHS
+        VenueHireSystem cloneSystem = new VenueHireSystem(oldSystem);
+        System.out.println("New VHS made");
+        //in new system, remove existing booking
+        cloneSystem.delete(id);
+        //attempt new booking
+        changeResult = cloneSystem.request(id, start, end, small, medium, large);
+        //if booking suceeded, replace old system with new system
+        //if JSON object status is success, set OG to be clone syste
+        if(changeResult.getString("status").equals("success")) {
+            System.out.println("about to copy clone to OG system");
+            oldSystem = cloneSystem;
+        }
+        //if not, return JSON obj (status should already be rejected) and delete cloneSystem
+        System.out.println(changeResult.toString(2));
+        return oldSystem;
+    }
     private void delete(String DeleteID) {
         //Look through VHS ven list
         for(Venue v: venueList) {
@@ -155,8 +171,11 @@ public class VenueHireSystem {
         }
     }
 
+    public ArrayList<Venue> getVenueList() {
+        return venueList;
+    }
+
     public static void main(String[] args) {
-        //TODO CHANGE BACK TO STDIN, NO FILE READING IN FINAL YOU NUMPTY
         VenueHireSystem system = new VenueHireSystem();
 
         /*File fileObj = new File("input1.txt");
@@ -170,7 +189,7 @@ public class VenueHireSystem {
         try {
             sc = new Scanner(fileObj);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
             return;
         }
@@ -179,7 +198,7 @@ public class VenueHireSystem {
             String line = sc.nextLine();
             if (!line.trim().equals("")) {
                 JSONObject command = new JSONObject(line);
-                system.processCommand(command);
+                system = system.processCommand(command, system);
             }
         }
         sc.close();
