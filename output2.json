@@ -1,0 +1,30 @@
+{
+    "venue": "Hotel",
+    "rooms": ["Bar"],
+    "status": "success"
+  }
+  [{
+    "reservations": [{
+      "start": "2020-01-10",
+      "end": "2020-01-11",
+      "id": "AGM"
+    }],
+    "room": "Bar"
+  }]
+  {
+    "venue": "Pavillion",
+    "rooms": ["Balcony"],
+    "status": "success"
+  }
+  [{
+    "reservations": [],
+    "room": "Bar"
+  }]
+  [{
+    "reservations": [{
+      "start": "2020-01-09",
+      "end": "2020-01-10",
+      "id": "AGM"
+    }],
+    "room": "Balcony"
+  }]

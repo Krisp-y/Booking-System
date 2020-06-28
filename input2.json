@@ -1,0 +1,7 @@
+{ "command": "room", "venue": "Pavillion", "room": "Balcony", "size": "large" }
+{ "command": "room", "venue": "Hotel", "room": "Bar", "size": "medium" }
+{ "command": "request", "id": "AGM", "start": "2020-01-10", "end": "2020-01-11", "small": 0, "medium": 1, "large": 0 }
+{ "command": "list", "venue": "Hotel" }
+{ "command": "change", "id": "AGM", "start": "2020-01-09", "end": "2020-01-10", "small": 0, "medium": 0, "large": 1 }
+{ "command": "list", "venue": "Hotel" }
+{ "command": "list", "venue": "Pavillion" }
