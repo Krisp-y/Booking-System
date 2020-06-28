@@ -86,7 +86,7 @@ public class VenueHireSystem {
                 
                 break;
             default:
-                System.out.println("oi nup");
+                //System.out.println("oi nup");
         }
         return system;
     }
@@ -118,7 +118,7 @@ public class VenueHireSystem {
         for (Venue v : venueList) {
             //still looking through rest of the rooms even when a suitable venue has been
             //found and allocated :(
-            System.out.println("Checking venue"+v.getVenueName());
+            //System.out.println("Checking venue"+v.getVenueName());
             if (v.attemptBooking(newRes)) {
                 // Booking is valid, set temp flag to false
                 //System.out.println("This booking is valid booking to make");
@@ -139,7 +139,7 @@ public class VenueHireSystem {
         JSONObject changeResult = new JSONObject();
         //clone VHS
         VenueHireSystem cloneSystem = new VenueHireSystem(oldSystem);
-        System.out.println("New VHS made");
+        //System.out.println("New VHS made");
         //in new system, remove existing booking
         cloneSystem.delete(id);
         //attempt new booking
@@ -147,7 +147,7 @@ public class VenueHireSystem {
         //if booking suceeded, replace old system with new system
         //if JSON object status is success, set OG to be clone syste
         if(changeResult.getString("status").equals("success")) {
-            System.out.println("about to copy clone to OG system");
+            //System.out.println("about to copy clone to OG system");
             oldSystem = cloneSystem;
         }
         //if not, return JSON obj (status should already be rejected) and delete cloneSystem

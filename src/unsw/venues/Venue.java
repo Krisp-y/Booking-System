@@ -161,8 +161,9 @@ public class Venue {
         //sort
         for(Room rm: roomList) {
             JSONObject newObj = new JSONObject();
-            newObj.put("reservations", rm.resArray());
+            newObj.put("reservations", rm.sortedArray());
             newObj.put("room", rm.getName());
+            //need to put in date order
             newVenArray.put(newObj);
         }
         return newVenArray;
@@ -209,5 +210,7 @@ public class Venue {
         //bookingRooms.put("rooms", rooms.toString());
         //return bookingRooms;
     }
+
+    //
 }
 

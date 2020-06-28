@@ -1,8 +1,12 @@
 package unsw.venues;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
@@ -88,13 +92,40 @@ public class Room {
         return reservationList.size();
     }
 
-    public JSONArray resArray() {
-        JSONArray newArray = new JSONArray();
+    //This sorting method is a modified version of the solution available at:
+    //https://stackoverflow.com/questions/19543862/how-can-i-sort-a-jsonarray-in-java/19546513#19546513
+    public JSONArray sortedArray() {
+        //JSONArray newArray = new JSONArray();
+        JSONArray sortedArray = new JSONArray();
         //sort
+        List<JSONObject> jsonVenues = new ArrayList<JSONObject>();
+        for(Reservation res: reservationList) {
+            jsonVenues.add(res.resToJSON());
+        }
+
+        jsonVenues.sort(new Comparator<>() {
+            private static final String KEY_DATE = "start";
+
+            @Override
+            public int compare(JSONObject a, JSONObject b) {
+                String dateA = (String) a.get(KEY_DATE);
+                String dateB = (String) b.get(KEY_DATE);
+
+                return dateA.compareTo(dateB);
+            }
+        });
+        //copy from List to JSONArray
+        for (JSONObject jsonVenue : jsonVenues) {
+            sortedArray.put(jsonVenue);
+        }
+        
+        /*
         for(Reservation res: reservationList) {
             newArray.put(res.resToJSON());
         }
-        return newArray;
+        */
+        return sortedArray;
+        
     }
 
 
