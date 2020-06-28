@@ -80,7 +80,7 @@ public class VenueHireSystem {
                 break;
             case "list":
                 String listId = json.getString("venue");
-                System.out.println("listing " + listId);
+                //System.out.println("listing " + listId);
                 list(listId);
                 //JSONArray listPrint = list(listId);
                 
@@ -94,7 +94,7 @@ public class VenueHireSystem {
     public void addRoom(String venue, String room, String size) {
         for (Venue v : venueList) {
             if (v.getVenueName().equals(venue)) {
-                System.out.println("adding room" + room + "to venue" + venue);
+                //System.out.println("adding room" + room + "to venue" + venue);
                 v.appendRoom(room, size);
                 //System.out.println("Room" + room + "is size"+ getSize(room) "and belongs to " + venue);
                 return;
@@ -164,7 +164,7 @@ public class VenueHireSystem {
     private void list(String listId) {
         for (Venue v : venueList) {
             if (v.getVenueName().equals(listId)) {
-                System.out.println(v.venArray());
+                System.out.println(v.venArray().toString(2));
                 
             }
         }
@@ -182,7 +182,7 @@ public class VenueHireSystem {
         
         //My testing input setup
         /*
-        File fileObj = new File("input1.txt");
+        File fileObj = new File("sample_input.json");
         Scanner sc;
         try {
             sc = new Scanner(fileObj);
