@@ -1,0 +1,40 @@
+{
+    "venue": "Hotel",
+    "rooms": ["Bar"],
+    "status": "success"
+  }
+  {"status": "rejected"}
+  {
+    "venue": "Hotel",
+    "rooms": [
+      "Ballroom",
+      "Pokies"
+    ],
+    "status": "success"
+  }
+  [
+    {
+      "reservations": [{
+        "start": "2020-03-01",
+        "end": "2020-03-02",
+        "id": "Birthday"
+      }],
+      "room": "Ballroom"
+    },
+    {
+      "reservations": [{
+        "start": "2020-03-01",
+        "end": "2020-03-02",
+        "id": "Birthday"
+      }],
+      "room": "Pokies"
+    },
+    {
+      "reservations": [{
+        "start": "2020-03-01",
+        "end": "2020-03-01",
+        "id": "AA Meeting"
+      }],
+      "room": "Bar"
+    }
+  ]
