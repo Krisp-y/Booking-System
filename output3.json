@@ -1,0 +1,46 @@
+{
+    "venue": "Pavillion",
+    "rooms": ["Balcony"],
+    "status": "success"
+  }
+  [
+    {
+      "reservations": [],
+      "room": "Bar"
+    },
+    {
+      "reservations": [],
+      "room": "Rooftop"
+    }
+  ]
+  {
+    "venue": "Hotel",
+    "rooms": [
+      "Bar",
+      "Rooftop"
+    ],
+    "status": "success"
+  }
+  {"status": "rejected"}
+  [
+    {
+      "reservations": [{
+        "start": "2020-05-02",
+        "end": "2020-05-03",
+        "id": "AGM"
+      }],
+      "room": "Bar"
+    },
+    {
+      "reservations": [{
+        "start": "2020-05-02",
+        "end": "2020-05-03",
+        "id": "AGM"
+      }],
+      "room": "Rooftop"
+    }
+  ]
+  [{
+    "reservations": [],
+    "room": "Balcony"
+  }]
